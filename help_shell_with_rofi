@@ -2,8 +2,21 @@
 # License: GPLv3
 # Credits: Felipe Facundes
 
-# Define your functions below
-# Add as many functions as you like in a similar manner
+: <<'DOCUMENTATION'
+Imagine creating helper functions and typing whatever you want in the terminal, just creating a 
+simple function instead of an entire script—this is the premise of help_shell.
+
+The help_shell script is an efficient and user-friendly tool designed to dynamically 
+display help information for your Bash functions.
+
+Define your functions below. Add as many functions as you like in a similar manner
+
+- Dynamic Help Display: Automatically lists all available functions with descriptions extracted from comments.
+- Interactive Search: Search for functions by name or description using a clean and intuitive menu powered by whiptail.
+- Flexible Usage: Allows for specifying functions as command-line arguments or interacting via the dynamic menu.
+- Integration Ready: Seamlessly integrates with the shell_utils framework, leveraging pre-defined variables and resources.
+DOCUMENTATION
+
 shell_utils=~/.shell_utils
 helps_dir="${shell_utils}/scripts/helps"
 
@@ -14,8 +27,24 @@ for file in "${helps_dir}"/**/*.sh; do
     source "${file}"
 done
 
+show_documentation() {
+    awk '
+    BEGIN { inside_block = 0 }
+
+    # Check the beginning of the DOCUMENTATION block
+    /: <<'\''DOCUMENTATION'\''/ { inside_block = 1; next }
+
+    # Check the end of the DOCUMENTATION block
+    inside_block && $0 == "DOCUMENTATION" { inside_block = 0; exit }
+
+    # Print lines within the DOCUMENTATION block
+    inside_block { print }
+    ' "$0"
+}
+
 # Display help dynamically
 help() {
+    echo -e "$(show_documentation | head -7)\n"
     echo "Usage: ${0##*/} [function1 function2 ...]"
     echo -e "\n-h, --help,"
     echo -e "
