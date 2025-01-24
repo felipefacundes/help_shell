@@ -1,6 +1,6 @@
 # help_shell: Simplified Help Management for Shell Scripts
 
-Imagine creating help functions, and typing whatever you want in the terminal, just create a simple function, instead of creating an entire script, this is the premise of `help_shell`.
+Imagine creating helper functions and typing whatever you want in the terminal, just creating a simple function instead of an entire script—this is the premise of `help_shell`.
 
 The `help_shell` script is an efficient and user-friendly tool designed to dynamically display help information for your Bash functions. As part of the [shell_utils framework](https://github.com/felipefacundes/shell_utils), one of the most comprehensive collections of utilities and scripts, this script simplifies the creation and management of help documentation for your custom functions.
 
